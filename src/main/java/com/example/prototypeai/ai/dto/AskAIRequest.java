@@ -1,4 +1,4 @@
-package com.example.prototypeai.user.dto;
+package com.example.prototypeai.ai.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.example.prototypeai.user.service;
+package com.example.prototypeai.ai.service;
 
 public interface AskAi {
 

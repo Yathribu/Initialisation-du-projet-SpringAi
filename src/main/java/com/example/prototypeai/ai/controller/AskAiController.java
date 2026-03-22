@@ -1,8 +1,8 @@
-package com.example.prototypeai.user.controller;
+package com.example.prototypeai.ai.controller;
 
-import com.example.prototypeai.user.dto.AskAIRequest;
-import com.example.prototypeai.user.dto.AskAIResponse;
-import com.example.prototypeai.user.service.AskAi;
+import com.example.prototypeai.ai.dto.AskAIRequest;
+import com.example.prototypeai.ai.dto.AskAIResponse;
+import com.example.prototypeai.ai.service.AskAi;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;

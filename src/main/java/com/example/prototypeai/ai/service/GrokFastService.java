@@ -1,4 +1,4 @@
-package com.example.prototypeai.user.service;
+package com.example.prototypeai.ai.service;
 
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
@@ -7,12 +7,12 @@ import com.openai.models.ChatCompletionCreateParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-@Service("GrokPowerfull")
-public class GrokPowerfullService implements AskAi {
+@Service("GrokFast")
+public class GrokFastService implements AskAi {
 
     private final OpenAIClient client;
 
-    public GrokPowerfullService(@Value("${xai.api.key}") String apiKey) {
+    public GrokFastService(@Value("${xai.api.key}") String apiKey) {
         this.client = OpenAIOkHttpClient.builder()
                                         .baseUrl("https://api.x.ai/v1")
                                         .apiKey(apiKey)
@@ -20,10 +20,9 @@ public class GrokPowerfullService implements AskAi {
     }
 
     public String ask(String UserRequest) {
-
         ChatCompletionCreateParams params =
                 ChatCompletionCreateParams.builder()
-                                          .model("grok-3")
+                                          .model("grok-3-fast")
                                           .addUserMessage(UserRequest)
                                           .build();
 
@@ -35,4 +34,5 @@ public class GrokPowerfullService implements AskAi {
                        .content()
                        .orElseThrow();
     }
+
 }
