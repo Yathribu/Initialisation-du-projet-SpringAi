@@ -1,30 +1,26 @@
 package com.example.prototypeai.ai.controller;
 
-import com.example.prototypeai.ai.dto.AskAIRequest;
-import com.example.prototypeai.ai.dto.AskAIResponse;
-import com.example.prototypeai.ai.service.AskAi;
+import com.example.prototypeai.ai.dto.AskAiDto;
+import com.example.prototypeai.ai.service.AskAiService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/home")
 public class AskAiController {
 
-    private final Map<String, AskAi> aiServices;
+    private final AskAiService aiServices;
 
-    public AskAiController(Map<String, AskAi> aiServices) {
+    public AskAiController(AskAiService aiServices) {
         this.aiServices = aiServices;
     }
 
-    @PostMapping("/{aiName}")
-    public AskAIResponse postAskAiFromUser(@PathVariable String aiName, @Valid @RequestBody AskAIRequest request) {
+    @PostMapping()
+    public AskAiDto.PostOutput postAskAiFromUser(@Valid @RequestBody AskAiDto.PostInput request) {
 
-        AskAi service = aiServices.get(aiName);
-
-        return AskAIResponse.builder()
-                            .userResponse(service.ask(request.getUserRequest()))
-                            .build();
+        return AskAiDto.PostOutput.builder()
+                                  .userResponse(aiServices.sendRequest(request.getUserRequest(), request.getAiProvider()))
+                                  .build();
     }
 
 }
