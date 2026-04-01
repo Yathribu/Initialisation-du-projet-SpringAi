@@ -1,4 +1,4 @@
-package com.example.prototypeai.model;
+package com.example.prototypeai.ai.model;
 
 import com.example.prototypeai.enums.AiProvider;
 import jakarta.persistence.*;
