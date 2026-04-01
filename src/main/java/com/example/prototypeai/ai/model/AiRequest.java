@@ -2,15 +2,15 @@ package com.example.prototypeai.ai.model;
 
 import com.example.prototypeai.enums.AiProvider;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity
 public class AiRequest {
 
@@ -21,7 +21,8 @@ public class AiRequest {
     private String request;
     private String response;
 
-    private LocalDateTime requestHour;
+    @CreatedDate
+    private LocalDateTime requestCreatedAt;
 
     @Enumerated(EnumType.STRING)
     private AiProvider.RequestType requestType;

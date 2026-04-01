@@ -18,9 +18,7 @@ public class AskAiController {
     @PostMapping()
     public AskAiDto.PostOutput postAskAiFromUser(@Valid @RequestBody AskAiDto.PostInput request) {
 
-        return AskAiDto.PostOutput.builder()
-                                  .userResponse(aiServices.sendRequest(request.getUserRequest(), request.getAiProvider()))
-                                  .build();
+        return aiServices.sendRequest(request.getUserRequest(), request.getAiProvider());
     }
 
 }

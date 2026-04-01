@@ -14,6 +14,7 @@ public class GrokFast implements AskAi{
     private final OpenAIClient client;
 
     public GrokFast(@Value("${xai.api.key}") String apiKey) {
+        System.out.println("API KEY = " + apiKey);
         this.client = OpenAIOkHttpClient.builder()
                                         .baseUrl("https://api.x.ai/v1")
                                         .apiKey(apiKey)

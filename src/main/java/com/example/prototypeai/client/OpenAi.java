@@ -40,5 +40,4 @@ public class OpenAi implements AskAi{
         return AiProvider.RequestType.OPEN_AI;
     }
 
-
 }
