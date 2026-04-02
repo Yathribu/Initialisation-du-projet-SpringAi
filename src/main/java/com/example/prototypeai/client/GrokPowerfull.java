@@ -1,6 +1,6 @@
 package com.example.prototypeai.client;
 
-import com.example.prototypeai.enums.AiProvider;
+import com.example.prototypeai.util.enums.AiProvider;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.models.ChatCompletion;

@@ -1,7 +1,7 @@
 package com.example.prototypeai;
 
 import com.example.prototypeai.client.AskAi;
-import com.example.prototypeai.enums.AiProvider;
+import com.example.prototypeai.util.enums.AiProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

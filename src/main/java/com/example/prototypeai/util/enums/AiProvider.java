@@ -1,4 +1,4 @@
-package com.example.prototypeai.enums;
+package com.example.prototypeai.util.enums;
 
 public class AiProvider {
 

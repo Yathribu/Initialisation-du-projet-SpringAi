@@ -1,6 +1,6 @@
-package com.example.prototypeai.ai.model;
+package com.example.prototypeai.ai.entity;
 
-import com.example.prototypeai.enums.AiProvider;
+import com.example.prototypeai.util.enums.AiProvider;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

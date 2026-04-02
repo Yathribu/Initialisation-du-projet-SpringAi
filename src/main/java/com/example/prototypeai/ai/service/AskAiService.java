@@ -1,9 +1,9 @@
 package com.example.prototypeai.ai.service;
 
 import com.example.prototypeai.ai.dto.AskAiDto;
-import com.example.prototypeai.ai.model.AiRequest;
+import com.example.prototypeai.ai.entity.AiRequest;
 import com.example.prototypeai.client.AskAi;
-import com.example.prototypeai.enums.AiProvider;
+import com.example.prototypeai.util.enums.AiProvider;
 import com.example.prototypeai.ai.repository.AiInteractionRepository;
 import jakarta.persistence.EntityListeners;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

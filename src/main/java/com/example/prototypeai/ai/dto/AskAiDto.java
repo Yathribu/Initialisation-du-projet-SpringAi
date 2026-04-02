@@ -1,6 +1,6 @@
 package com.example.prototypeai.ai.dto;
 
-import com.example.prototypeai.enums.AiProvider;
+import com.example.prototypeai.util.enums.AiProvider;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
