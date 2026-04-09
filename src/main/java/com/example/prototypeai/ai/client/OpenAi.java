@@ -1,6 +1,6 @@
-package com.example.prototypeai.client;
+package com.example.prototypeai.ai.client;
 
-import com.example.prototypeai.util.enums.AiProvider;
+import com.example.prototypeai.util.enums.RequestType;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.models.ChatCompletion;
@@ -36,8 +36,8 @@ public class OpenAi implements AskAi{
     }
 
     @Override
-    public AiProvider.RequestType getProvider() {
-        return AiProvider.RequestType.OPEN_AI;
+    public RequestType getProvider() {
+        return RequestType.OPEN_AI;
     }
 
 }

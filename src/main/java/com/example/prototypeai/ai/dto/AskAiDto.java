@@ -1,6 +1,6 @@
 package com.example.prototypeai.ai.dto;
 
-import com.example.prototypeai.util.enums.AiProvider;
+import com.example.prototypeai.util.enums.RequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -8,24 +8,13 @@ import lombok.*;
 @Builder
 public class AskAiDto {
 
-    @Data
     @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class PostInput {
-        @NotBlank
-        private String userRequest;
+    public record PostInput(@NotBlank String userRequest, @NotNull RequestType aiProvider, @NotNull Long userId) {
 
-        @NotNull
-        private AiProvider.RequestType aiProvider;
     }
 
-    @Data
     @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class PostOutput {
-        private String userResponse;
+    public record PostOutput(String userResponse) {
     }
 
 }

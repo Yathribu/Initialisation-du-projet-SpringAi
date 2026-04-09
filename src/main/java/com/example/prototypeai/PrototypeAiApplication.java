@@ -1,7 +1,7 @@
 package com.example.prototypeai;
 
-import com.example.prototypeai.client.AskAi;
-import com.example.prototypeai.util.enums.AiProvider;
+import com.example.prototypeai.ai.client.AskAi;
+import com.example.prototypeai.util.enums.RequestType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class PrototypeAiApplication {
 
 	public static void main(String[] args) {
@@ -20,8 +20,8 @@ public class PrototypeAiApplication {
 	}
 
     @Bean
-    public Map<AiProvider.RequestType, AskAi> mapAiProvider(List<AskAi> askAiList) {
-        Map<AiProvider.RequestType, AskAi> map = new HashMap<>();
+    public Map<RequestType, AskAi> mapAiProvider(List<AskAi> askAiList) {
+        Map<RequestType, AskAi> map = new HashMap<>();
 
         for (AskAi askAi : askAiList) {
             map.put(askAi.getProvider(), askAi);

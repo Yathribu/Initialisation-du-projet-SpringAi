@@ -19,7 +19,7 @@ public class AskAiController {
 
     @PostMapping()
     public ResponseEntity<AskAiDto.PostOutput> postAskAiFromUser(@Valid @RequestBody AskAiDto.PostInput request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendRequest(request.getUserRequest(), request.getAiProvider()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendRequest(request));
     }
 
 }

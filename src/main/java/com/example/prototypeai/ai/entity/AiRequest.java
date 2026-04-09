@@ -1,10 +1,10 @@
 package com.example.prototypeai.ai.entity;
 
-import com.example.prototypeai.util.enums.AiProvider;
+import com.example.prototypeai.baseentity.BaseEntity;
+import com.example.prototypeai.user.entity.User;
+import com.example.prototypeai.util.enums.RequestType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class AiRequest {
+public class AiRequest extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class AiRequest {
     private String request;
     private String response;
 
-    @CreatedDate
-    private LocalDateTime requestCreatedAt;
-
     @Enumerated(EnumType.STRING)
-    private AiProvider.RequestType requestType;
+    private RequestType requestType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }

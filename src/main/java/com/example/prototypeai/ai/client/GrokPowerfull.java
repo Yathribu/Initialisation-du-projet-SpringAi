@@ -1,6 +1,6 @@
-package com.example.prototypeai.client;
+package com.example.prototypeai.ai.client;
 
-import com.example.prototypeai.util.enums.AiProvider;
+import com.example.prototypeai.util.enums.RequestType;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.models.ChatCompletion;
@@ -9,12 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GrokFast implements AskAi{
+public class GrokPowerfull implements AskAi{
 
     private final OpenAIClient client;
 
-    public GrokFast(@Value("${xai.api.key}") String apiKey) {
-        System.out.println("API KEY = " + apiKey);
+    public GrokPowerfull(@Value("${xai.api.key}") String apiKey) {
         this.client = OpenAIOkHttpClient.builder()
                                         .baseUrl("https://api.x.ai/v1")
                                         .apiKey(apiKey)
@@ -23,8 +22,9 @@ public class GrokFast implements AskAi{
 
     @Override
     public String sendRequest(String UserRequest) {
+
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-                                                                      .model("grok-3-fast")
+                                                                      .model("grok-3")
                                                                       .addUserMessage(UserRequest)
                                                                       .build();
 
@@ -38,8 +38,9 @@ public class GrokFast implements AskAi{
     }
 
     @Override
-    public AiProvider.RequestType getProvider() {
-        return AiProvider.RequestType.GROK_FAST;
+    public RequestType getProvider() {
+        return RequestType.GROK_POWERFULL;
     }
+
 
 }

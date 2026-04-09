@@ -2,45 +2,61 @@ package com.example.prototypeai.ai.service;
 
 import com.example.prototypeai.ai.dto.AskAiDto;
 import com.example.prototypeai.ai.entity.AiRequest;
-import com.example.prototypeai.client.AskAi;
-import com.example.prototypeai.util.enums.AiProvider;
+import com.example.prototypeai.ai.client.AskAi;
+import com.example.prototypeai.user.entity.User;
+import com.example.prototypeai.user.repository.IUserRepository;
 import com.example.prototypeai.ai.repository.AiInteractionRepository;
-import jakarta.persistence.EntityListeners;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.example.prototypeai.util.enums.RequestType;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 
 @Service
-@EntityListeners(AuditingEntityListener.class)
 public class AskAiService {
 
     private final AiInteractionRepository aiInteractionRepository;
-    private final Map<AiProvider.RequestType, AskAi> aiMap;
+    private final IUserRepository userRepository;
+    private final Map<RequestType, AskAi> aiMap;
 
-    public AskAiService(AiInteractionRepository aiInteractionRepository, Map<AiProvider.RequestType, AskAi> aiMap) {
+    public AskAiService(AiInteractionRepository aiInteractionRepository, IUserRepository userRepository, Map<RequestType, AskAi> aiMap) {
         this.aiInteractionRepository = aiInteractionRepository;
+        this.userRepository = userRepository;
         this.aiMap = aiMap;
     }
 
-    public AskAiDto.PostOutput sendRequest(String request, AiProvider.RequestType requestType) {
+    public AskAiDto.PostOutput sendRequest(AskAiDto.PostInput request) {
 
-        AskAi ai = aiMap.get(requestType);
+        User user = userRepository.findById(request.userId()).orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé"));
 
-        if(ai == null) {
-            throw new RuntimeException("No such AskAi");
+        if(!isAvalaible(request)) {
+            throw new IllegalArgumentException("Nombre de requête limité");
         }
 
-        AiRequest aiInteraction = new AiRequest();
-        aiInteraction.setRequest(request);
-        aiInteraction.setRequestCreatedAt(LocalDateTime.now());
-        aiInteraction.setRequestType(requestType);
-        aiInteraction.setResponse(ai.sendRequest(request));
-        aiInteractionRepository.save(aiInteraction);
+        AskAi ai = aiMap.get(request.aiProvider());
+        if(ai == null) {
+            throw new RuntimeException("Aucune ia portant ce nom n'a été trouvé");
+        }
+
+        AiRequest aiProvider = new AiRequest();
+        aiProvider.setRequest(request.userRequest());
+        aiProvider.setRequestType(request.aiProvider());
+        aiProvider.setResponse(ai.sendRequest(request.userRequest()));
+        aiProvider.setUser(user);
+        aiInteractionRepository.save(aiProvider);
 
         return AskAiDto.PostOutput.builder()
-                .userResponse(aiInteraction.getResponse())
+                .userResponse(aiProvider.getResponse())
                 .build();
+    }
+
+    public boolean isAvalaible(AskAiDto.PostInput request) {
+        Instant now = Instant.now();
+        Duration windowsTime = Duration.ofMinutes(15);
+        Instant windows = now.minus(windowsTime);
+        List<AiRequest> listOfRequest = aiInteractionRepository.findByUserIdAndCreatedAtAfter(request.userId(), windows);
+        return listOfRequest.size() <= 10;
     }
 
 }
