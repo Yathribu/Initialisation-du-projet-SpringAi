@@ -4,7 +4,10 @@ import com.example.prototypeai.baseentity.BaseEntity;
 import com.example.prototypeai.user.entity.User;
 import com.example.prototypeai.util.enums.RequestType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Builder
 @NoArgsConstructor
@@ -24,7 +27,10 @@ public class AiRequest extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RequestType requestType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id",  nullable = false)
     private User user;
 
 }

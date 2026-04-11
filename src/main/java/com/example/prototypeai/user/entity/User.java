@@ -1,7 +1,9 @@
 package com.example.prototypeai.user.entity;
 
+import com.example.prototypeai.ai.entity.AiRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -17,4 +19,6 @@ public class User {
 
     private String name;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AiRequest> aiRequests;
 }
