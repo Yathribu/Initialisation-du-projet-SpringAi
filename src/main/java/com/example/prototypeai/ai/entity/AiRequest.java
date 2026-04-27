@@ -1,13 +1,14 @@
 package com.example.prototypeai.ai.entity;
 
 import com.example.prototypeai.baseentity.BaseEntity;
-import com.example.prototypeai.user.entity.User;
+import com.example.prototypeai.user.entity.AiUser;
 import com.example.prototypeai.util.enums.RequestType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -22,15 +23,14 @@ public class AiRequest extends BaseEntity {
     private Long id;
 
     private String request;
-    private String response;
+    private List<String> response;
 
     @Enumerated(EnumType.STRING)
-    private RequestType requestType;
+    private List<RequestType> requestType;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id",  nullable = false)
-    private User user;
+    private AiUser aiUser;
 
 }

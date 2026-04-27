@@ -16,7 +16,6 @@ public class PrototypeAiApplication {
 
 	public static void main(String[] args) {
         SpringApplication.run(PrototypeAiApplication.class, args);
-
 	}
 
     @Bean

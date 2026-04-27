@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.Instant;
 import java.util.List;
 
-public interface AiInteractionRepository extends JpaRepository<AiRequest, Long> {
+public interface AiRequestRepository extends JpaRepository<AiRequest, Long> {
 
     List<AiRequest> findByUserIdAndCreatedAtAfter(Long userId, Instant afterCreatedAt);
 
