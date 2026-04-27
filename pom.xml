@@ -66,7 +66,12 @@
             <artifactId>spring-dotenv</artifactId>
             <version>3.0.0</version>
         </dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -124,8 +129,6 @@
 			<version>0.13.0</version>
 			<scope>runtime</scope>
 		</dependency>
-
-
 
 	</dependencies>
 
