@@ -1,6 +1,7 @@
 package com.example.prototypeai.user.entity;
 
 import com.example.prototypeai.ai.entity.AiRequest;
+import com.example.prototypeai.baseentity.BaseEntity;
 import com.example.prototypeai.role.entity.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter @Setter
 @Entity
-public class AiUser {
+public class AiUser extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

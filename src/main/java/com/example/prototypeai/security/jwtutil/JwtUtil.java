@@ -1,9 +1,10 @@
 package com.example.prototypeai.security.jwtutil;
 
-import com.example.prototypeai.constants.Constants;
+import com.example.prototypeai.config.ConfigJwt;
 import com.example.prototypeai.user.entity.AiUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -15,11 +16,14 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
+
+    private final ConfigJwt  configJwt;
 
     public String generateJwtToken(Authentication authentication) {
         String jwtToken;
-        String secret = Constants.JWT_SECRET_DEFAULT_VALUE;
+        String secret = configJwt.getSecretKey();
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         AiUser aiUser = (AiUser) authentication.getPrincipal();
         jwtToken = Jwts.builder()

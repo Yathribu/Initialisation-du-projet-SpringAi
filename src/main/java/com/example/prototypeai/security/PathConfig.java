@@ -10,8 +10,10 @@ public class PathConfig {
     @Bean(name = "publicPaths")
     public List<String> publicPath() {
         return List.of(
-                "/auth/register/public",
-                "/auth/login/public"
+                "/auth/public/register",
+                "/auth/public/login",
+                "/home/public/all",
+                "/home/public/compare"
         );
     }
 

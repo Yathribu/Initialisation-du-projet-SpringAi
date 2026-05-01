@@ -14,11 +14,16 @@ public class ProviderResolver {
 
     public List<AskAi> selectedAiFromUser(List<RequestType> aiChosenByUser) {
 
-        if (aiChosenByUser.isEmpty() || aiChosenByUser == null) {
-            return List.of(askAiList.stream().findFirst().orElseThrow(() -> new IllegalArgumentException("L'ia selectionné n'existe pas")));
+        if (aiChosenByUser == null || aiChosenByUser.isEmpty()) {
+            return List.of(askAiList.stream()
+                                    .findFirst()
+                                    .orElseThrow(() -> new IllegalArgumentException("Veuillez sélectionner une ia disponible")));
         }
 
-        List<AskAi> pool = askAiList.stream().filter(p -> aiChosenByUser.contains(p.getProvider())).toList();
+        List<AskAi> pool = askAiList.stream()
+                                    .filter(p -> aiChosenByUser.contains(p.getProvider()))
+                                    .toList();
+
         if (pool.isEmpty()) {
             throw new IllegalArgumentException("Ia non retrouvé");
         }

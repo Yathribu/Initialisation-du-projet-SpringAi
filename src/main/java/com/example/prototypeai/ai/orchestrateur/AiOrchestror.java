@@ -2,12 +2,10 @@ package com.example.prototypeai.ai.orchestrateur;
 
 import com.example.prototypeai.ai.client.AskAi;
 import com.example.prototypeai.ai.dto.AiRequestDto;
-import com.example.prototypeai.ai.mod.ModStrategy;
-import com.example.prototypeai.ai.mod.ModeStrategyResolver;
+import com.example.prototypeai.ai.mod.*;
 import com.example.prototypeai.ai.providerresolver.ProviderResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 

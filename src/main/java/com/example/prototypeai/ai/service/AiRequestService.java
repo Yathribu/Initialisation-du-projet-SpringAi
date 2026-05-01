@@ -3,30 +3,31 @@ package com.example.prototypeai.ai.service;
 import com.example.prototypeai.ai.dto.AiRequestDto;
 import com.example.prototypeai.ai.entity.AiRequest;
 import com.example.prototypeai.ai.orchestrateur.AiOrchestror;
+import com.example.prototypeai.ratelimit.RateLimit;
 import com.example.prototypeai.user.entity.AiUser;
 import com.example.prototypeai.user.repository.IAiUserRepository;
 import com.example.prototypeai.ai.repository.AiRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AiRequestService {
 
-    private final Integer limitRateDelay = 15;
-    private final Integer amountOfPromptLimit = 10;
     private final AiRequestRepository aiRequestRepository;
     private final IAiUserRepository userRepository;
     private final AiOrchestror orchestrator;
+    private final RateLimit rateLimit;
 
-    public AiRequestDto.PostOutput sendRequest(AiRequestDto.PostInput request) {
+    public AiRequestDto.PostOutput sendSingleRequest(AiRequestDto.PostInput request) {
 
-        AiUser aiUser = userRepository.findById(request.userId()).orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé"));
+        // On veut que l'utilisateur existe avant de faire une request.
+        AiUser aiUser = userRepository.findById(request.userId())
+                                      .orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé"));
 
-        if(!isAuthorizedToPrompt(request)) {
+        // A-t-il dépassé la limite de 15 requêtes par 10 minutes ?
+        if(!rateLimit.isAuthorizedToPrompt(request)) {
             throw new IllegalArgumentException("Nombre de requête limité");
         }
 
@@ -42,12 +43,6 @@ public class AiRequestService {
         return AiRequestDto.PostOutput.builder()
                 .userResponse(aiResponse)
                 .build();
-    }
-
-    public boolean isAuthorizedToPrompt(AiRequestDto.PostInput request) {
-        Instant windows = Instant.now().minus(Duration.ofMinutes(limitRateDelay));
-        List<AiRequest> listOfRequest = aiRequestRepository.findByUserIdAndCreatedAtAfter(request.userId(), windows);
-        return listOfRequest.size() <= amountOfPromptLimit;
     }
 
 }

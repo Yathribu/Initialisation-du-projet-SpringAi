@@ -13,11 +13,12 @@ public record RegisterRequestDto(
 
         @NotBlank(message = "L'email est obligatoire")
         @Email(message = "Un email valide est nécessaire")
+        @Size(max = 255, message = "Email trop long")
         String email,
 
         @NotBlank(message = "Le mot de passe est obligatoire")
         @Size(min = 8, max = 20, message = "Le mot de passe doit être compris entre 2 et 20 caractères")
-        String motDePasseHash,
+        String motDePasse,
 
         @NotBlank(message = "Le numéro de téléphone est obligatoire")
         @Pattern(regexp = "^0[67]\\\\d{8}$", message = "Le numéro de téléphone doit contenir 10 chiffres")

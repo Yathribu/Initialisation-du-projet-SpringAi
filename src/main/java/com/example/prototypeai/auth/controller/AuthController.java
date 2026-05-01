@@ -7,6 +7,7 @@ import com.example.prototypeai.auth.dto.RegisterRequestDto;
 import com.example.prototypeai.security.jwtutil.JwtUtil;
 import com.example.prototypeai.user.dto.AiUserDto;
 import com.example.prototypeai.user.entity.AiUser;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,15 +31,15 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final RegisterService  registerService;
 
-    @PostMapping("/register/public")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequestDto registerRequestDto) {
+    @PostMapping("/public/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
         return registerService.registerUser(registerRequestDto);
     }
 
-    @PostMapping("/login/public")
+    @PostMapping("/public/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequestDto loginRequestDto) {
         try {
-            var resultOfAuthentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.username(), loginRequestDto.password()));
+            Authentication resultOfAuthentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.username(), loginRequestDto.password()));
             String jwtToken = jwtUtil.generateJwtToken(resultOfAuthentication);
             AiUserDto userDto = new AiUserDto();
             AiUser aiUser = (AiUser) resultOfAuthentication.getPrincipal();

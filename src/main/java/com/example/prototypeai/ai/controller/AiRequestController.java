@@ -17,9 +17,19 @@ public class AiRequestController {
         this.aiServices = aiServices;
     }
 
-    @PostMapping()
-    public ResponseEntity<AiRequestDto.PostOutput> postAskAiFromUser(@Valid @RequestBody AiRequestDto.PostInput request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendRequest(request));
+    @PostMapping("/single")
+    public ResponseEntity<AiRequestDto.PostOutput> sendSingle(@Valid @RequestBody AiRequestDto.PostInput request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendSingleRequest(request));
+    }
+
+    @PostMapping("/compare")
+    public ResponseEntity<AiRequestDto.PostOutput> sendCompare(@Valid @RequestBody AiRequestDto.PostInput request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendCompareRequest(request));
+    }
+
+    @PostMapping("/all")
+    public ResponseEntity<AiRequestDto.PostOutput> sendAll(@Valid @RequestBody AiRequestDto.PostInput request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendAllRequest(request));
     }
 
 }

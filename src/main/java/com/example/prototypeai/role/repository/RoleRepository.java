@@ -1,11 +1,11 @@
 package com.example.prototypeai.role.repository;
 
 import com.example.prototypeai.role.entity.Role;
+import com.example.prototypeai.role.roleenum.RoleType;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Optional<Role> findRoleByRoleName(String name);
+    Optional<Role> findRoleByRoleName(RoleType roleType);
 }

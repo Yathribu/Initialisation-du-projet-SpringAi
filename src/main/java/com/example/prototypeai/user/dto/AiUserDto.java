@@ -1,5 +1,6 @@
 package com.example.prototypeai.user.dto;
 
+import com.example.prototypeai.role.roleenum.RoleType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,5 +14,5 @@ public class AiUserDto {
     private String name;
     private String email;
     private String mobileNumber;
-    private String role;
+    private RoleType role;
 }
