@@ -23,7 +23,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class PrototypeAiSecurityConfig {
 
     private final List<String> publicPaths;
@@ -31,9 +30,10 @@ public class PrototypeAiSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public PrototypeAiSecurityConfig(@Qualifier("publicPaths") List<String> publicPaths,
-                                     @Qualifier("securedPaths")List<String> securedPaths) {
+                                     @Qualifier("securedPaths")List<String> securedPaths, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.publicPaths = publicPaths;
         this.securedPaths = securedPaths;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean

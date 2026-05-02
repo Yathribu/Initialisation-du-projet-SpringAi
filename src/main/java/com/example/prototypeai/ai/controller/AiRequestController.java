@@ -17,19 +17,9 @@ public class AiRequestController {
         this.aiServices = aiServices;
     }
 
-    @PostMapping("/single")
+    @PostMapping("/askai")
     public ResponseEntity<AiRequestDto.PostOutput> sendSingle(@Valid @RequestBody AiRequestDto.PostInput request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendSingleRequest(request));
-    }
-
-    @PostMapping("/compare")
-    public ResponseEntity<AiRequestDto.PostOutput> sendCompare(@Valid @RequestBody AiRequestDto.PostInput request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendCompareRequest(request));
-    }
-
-    @PostMapping("/all")
-    public ResponseEntity<AiRequestDto.PostOutput> sendAll(@Valid @RequestBody AiRequestDto.PostInput request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(aiServices.sendAllRequest(request));
     }
 
 }

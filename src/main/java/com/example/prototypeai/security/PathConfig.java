@@ -12,8 +12,7 @@ public class PathConfig {
         return List.of(
                 "/auth/public/register",
                 "/auth/public/login",
-                "/home/public/all",
-                "/home/public/compare"
+                "/home/askai"
         );
     }
 
