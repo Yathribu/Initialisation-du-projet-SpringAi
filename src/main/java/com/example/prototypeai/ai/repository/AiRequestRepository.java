@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface AiRequestRepository extends JpaRepository<AiRequest, Long> {
 
-    List<AiRequest> findByUserIdAndCreatedAtAfter(Long userId, Instant afterCreatedAt);
+    Integer countByUserIdAndCreatedAtAfter(Long userId, Instant afterCreatedAt);
 
 }

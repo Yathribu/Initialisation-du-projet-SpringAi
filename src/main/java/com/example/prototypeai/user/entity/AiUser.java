@@ -35,7 +35,7 @@ public class AiUser extends BaseEntity {
 
     @NotNull
     @Size(min = 8)
-    private String motDePasseHash;
+    private String motDePasse;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;

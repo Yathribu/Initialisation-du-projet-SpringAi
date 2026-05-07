@@ -46,7 +46,7 @@ public class RegisterService {
         }
 
         AiUser aiUser = aiUserMapper.toEntity(registerRequestDto);
-        aiUser.setMotDePasseHash(passwordEncoder.encode(registerRequestDto.motDePasse()));
+        aiUser.setMotDePasse(passwordEncoder.encode(registerRequestDto.motDePasse()));
         Role role = roleRepository.findRoleByRoleName(Constants.ROLE_USER).orElseThrow(()
                 -> new IllegalArgumentException("Ce rôle n'existe pas : " + Constants.ROLE_USER));
         aiUser.setRole(role);

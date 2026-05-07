@@ -28,8 +28,8 @@ public class PrototypeAiAuthenticationProvider implements AuthenticationProvider
         String password = authentication.getCredentials().toString();
         AiUser aiUser = userRepository.findAiUserByEmail(username).orElseThrow(()
                 -> new UsernameNotFoundException("Le nom d'utilistaeur : " + username + " n'a pas été trouvé"));
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(aiUser.getMotDePasseHash()));
-        if(passwordEncoder.matches(password, aiUser.getMotDePasseHash())) {
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(aiUser.getMotDePasse()));
+        if(passwordEncoder.matches(password, aiUser.getMotDePasse())) {
             return new UsernamePasswordAuthenticationToken(aiUser, null, authorities);
         } else {
             throw  new BadCredentialsException("Mot de passe incorrect");

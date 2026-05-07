@@ -1,8 +1,8 @@
 package com.example.prototypeai.userrole;
 
 import com.example.prototypeai.baseentity.BaseEntity;
-import com.example.prototypeai.role.entity.Role;
-import com.example.prototypeai.user.entity.AiUser;
+import com.example.prototypeai.role.roleenum.RoleType;
+import com.example.prototypeai.util.enums.RequestType;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,10 +13,12 @@ public class UserRole extends BaseEntity {
     @Column(nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Role role;
+    @Enumerated(EnumType.ORDINAL)
+    private RoleType role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private AiUser aiUser;
+    private Long entityId;
+
+    @Enumerated(EnumType.ORDINAL)
+    private RequestType requestType;
 
 }

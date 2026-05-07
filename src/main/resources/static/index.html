@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Multi Response</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <h1>AI Multi Response</h1>
+
+        <p>
+            Compare les réponses de plusieurs intelligences artificielles
+        </p>
+
+    </header>
+
+    <!-- INPUT SECTION -->
+    <section class="input-section">
+
+        <!-- Prompt -->
+        <textarea
+                id="promptInput"
+                placeholder="Pose une question à l'IA..."
+        ></textarea>
+
+        <!-- AI Providers -->
+        <div class="providers">
+
+            <label class="provider-card">
+                <input type="checkbox" value="GPT4">
+                <span>GPT4</span>
+            </label>
+
+            <label class="provider-card">
+                <input type="checkbox" value="CLAUDE">
+                <span>Claude</span>
+            </label>
+
+            <label class="provider-card">
+                <input type="checkbox" value="MISTRAL">
+                <span>Mistral</span>
+            </label>
+
+        </div>
+
+        <!-- Button -->
+        <button id="generateBtn">
+            Générer les réponses
+        </button>
+
+    </section>
+
+    <!-- Loading -->
+    <div id="loading" class="loading hidden">
+        Génération des réponses IA...
+    </div>
+
+    <!-- Responses -->
+    <section id="responsesContainer" class="responses-container">
+
+    </section>
+
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
