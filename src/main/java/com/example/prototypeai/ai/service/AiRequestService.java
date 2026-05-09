@@ -9,10 +9,13 @@ import com.example.prototypeai.user.repository.IAiUserRepository;
 import com.example.prototypeai.ai.repository.AiRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true) // Pour toutes les futurs rest api read
 public class AiRequestService {
 
     private final AiRequestRepository aiRequestRepository;
@@ -20,6 +23,7 @@ public class AiRequestService {
     private final AiOrchestror orchestrator;
     private final RateLimit rateLimit;
 
+    @Transactional // je reste sur les param par défaut fourni par spring.
     public AiRequestDto.PostOutput sendSingleRequest(AiRequestDto.PostInput request) {
 
         // On veut que l'utilisateur existe avant de faire une request.
