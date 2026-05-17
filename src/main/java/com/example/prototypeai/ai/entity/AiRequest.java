@@ -1,8 +1,8 @@
 package com.example.prototypeai.ai.entity;
 
+import com.example.prototypeai.ai.client.AskAi;
 import com.example.prototypeai.baseentity.BaseEntity;
 import com.example.prototypeai.user.entity.AiUser;
-import com.example.prototypeai.util.enums.RequestType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -13,8 +13,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
+@NamedQueries({
+        @NamedQuery(name = "AiRequest.getAllRequest",
+        query = "SELECT NEW com.example.prototypeai.admin.dto.AiRequestAdminDto(r.id, r.request, r.response, r.aiProviders, r.createdAt, u.id, u.email, u.userSubscription) FROM AiRequest r JOIN r.aiUser u")
+})
 @Entity
 public class AiRequest extends BaseEntity {
 
@@ -25,8 +28,7 @@ public class AiRequest extends BaseEntity {
     private String request;
     private List<String> response;
 
-    @Enumerated(EnumType.STRING)
-    private List<RequestType> requestType;
+    private List<AskAi> aiProviders;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -26,9 +26,9 @@ public class PrototypeAiAuthenticationProvider implements AuthenticationProvider
     public @Nullable Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        AiUser aiUser = userRepository.findAiUserByEmail(username).orElseThrow(()
-                -> new UsernameNotFoundException("Le nom d'utilistaeur : " + username + " n'a pas été trouvé"));
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(aiUser.getMotDePasse()));
+        AiUser aiUser = userRepository.findAiUserByEmail(username)
+                                      .orElseThrow(() -> new UsernameNotFoundException("Le nom d'utilistaeur : " + username + " n'a pas été trouvé"));
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(aiUser.getRole().getRoleName().toString()));
         if(passwordEncoder.matches(password, aiUser.getMotDePasse())) {
             return new UsernamePasswordAuthenticationToken(aiUser, null, authorities);
         } else {

@@ -1,8 +1,10 @@
 package com.example.prototypeai.ai.providerresolver;
 
 import com.example.prototypeai.ai.client.AskAi;
-import com.example.prototypeai.util.enums.RequestType;
+import com.example.prototypeai.subscription.entity.UserSubscription;
+import com.example.prototypeai.user.entity.AiUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
@@ -12,22 +14,11 @@ public class ProviderResolver {
 
     private final List<AskAi> askAiList;
 
-    public List<AskAi> selectedAiFromUser(List<RequestType> aiChosenByUser) {
+    public List<AskAi> getUserAi(Authentication authentication) {
+        AiUser user = (AiUser) authentication.getPrincipal();
+        UserSubscription.SubscriptionType subscriptionType = user.getUserSubscription().getSubscriptionType();
 
-        if (aiChosenByUser == null || aiChosenByUser.isEmpty()) {
-            return List.of(askAiList.stream()
-                                    .findFirst()
-                                    .orElseThrow(() -> new IllegalArgumentException("Veuillez sélectionner une ia disponible")));
-        }
-
-        List<AskAi> pool = askAiList.stream()
-                                    .filter(p -> aiChosenByUser.contains(p.getProvider()))
-                                    .toList();
-
-        if (pool.isEmpty()) {
-            throw new IllegalArgumentException("Ia non retrouvé");
-        }
-        return pool;
+        return askAiList.stream().filter(p -> p.support(subscriptionType)).toList();
     }
 
 }

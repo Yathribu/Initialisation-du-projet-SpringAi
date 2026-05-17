@@ -1,7 +1,6 @@
 package com.example.prototypeai.security;
 
 import com.example.prototypeai.security.jwtFilter.JwtAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import java.util.List;
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -38,9 +35,7 @@ public class PrototypeAiSecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
-        return http.cors(corsConfig -> corsConfig.disable())
-                .csrf(csrfConfig -> csrfConfig.disable())
-                .authorizeHttpRequests(authorizeRequests -> {
+        return http.authorizeHttpRequests(authorizeRequests -> {
                     publicPaths.forEach(path -> authorizeRequests.requestMatchers(path).permitAll());
                     securedPaths.forEach(path -> authorizeRequests.requestMatchers(path).authenticated());
                     authorizeRequests.anyRequest().denyAll();
@@ -50,12 +45,6 @@ public class PrototypeAiSecurityConfig {
                 .httpBasic(withDefaults())
                 .build();
     }
-
-    /*@Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-    }*/
 
     @Bean
     AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {

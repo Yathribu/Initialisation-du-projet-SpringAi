@@ -1,5 +1,6 @@
 package com.example.prototypeai.ai.client;
 
+import com.example.prototypeai.subscription.entity.UserSubscription;
 import com.example.prototypeai.util.enums.RequestType;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
@@ -40,6 +41,11 @@ public class GrokPowerfull implements AskAi{
     @Override
     public RequestType getProvider() {
         return RequestType.GROK_POWERFULL;
+    }
+
+    @Override
+    public boolean support(UserSubscription.SubscriptionType subscriptionType) {
+        return subscriptionType == UserSubscription.SubscriptionType.PREMIUM;
     }
 
 

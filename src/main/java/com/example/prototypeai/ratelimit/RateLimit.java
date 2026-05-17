@@ -18,7 +18,7 @@ public class RateLimit {
         int amountOfPromptLimit = 10;
 
         Instant windows = Instant.now().minus(Duration.ofMinutes(limitRateDelay));
-        Integer count = aiRequestRepository.countByUserIdAndCreatedAtAfter(request.userId(), windows);
+        Integer count = aiRequestRepository.countByAiUserIdAndCreatedAtAfter(request.userId(), windows);
 
         return count <= amountOfPromptLimit;
     }

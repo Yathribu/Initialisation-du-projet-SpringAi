@@ -14,9 +14,7 @@ public class AiOrchestror {
 
     private final ProviderResolver resolver;
 
-    public List<String> executePrompt(AiRequestDto.PostInput request) {
-
-        List<AskAi> providers = resolver.selectedAiFromUser(request.aiProvider());
+    public List<String> executePrompt(AiRequestDto.PostInput request, List<AskAi> providers) {
 
         List<String> aiResponse = new ArrayList<>();
 

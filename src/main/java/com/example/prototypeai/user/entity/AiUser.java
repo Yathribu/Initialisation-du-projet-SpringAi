@@ -3,6 +3,7 @@ package com.example.prototypeai.user.entity;
 import com.example.prototypeai.ai.entity.AiRequest;
 import com.example.prototypeai.baseentity.BaseEntity;
 import com.example.prototypeai.role.entity.Role;
+import com.example.prototypeai.subscription.entity.UserSubscription;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -39,5 +40,8 @@ public class AiUser extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserSubscription userSubscription;
 
 }

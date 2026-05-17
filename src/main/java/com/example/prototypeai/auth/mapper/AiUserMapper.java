@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface AiUserMapper {
 
     @Mapping(target = "email", source = "email", qualifiedByName = "TrimUtil")
-    @Mapping(target = "motDePasseHash", ignore = true)
+    @Mapping(target = "motDePasse", ignore = true)
     @Mapping(target = "role", ignore = true)
     AiUser toEntity(RegisterRequestDto registerRequestDto);
 
