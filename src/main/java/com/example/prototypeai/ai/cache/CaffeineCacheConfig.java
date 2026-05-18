@@ -1,6 +1,7 @@
-package com.example.prototypeai.cache;
+package com.example.prototypeai.ai.cache;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import lombok.Getter;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Getter
 @Configuration
 public class CaffeineCacheConfig {
 

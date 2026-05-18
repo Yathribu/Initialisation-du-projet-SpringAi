@@ -18,12 +18,26 @@ public class AiOrchestror {
 
         List<String> aiResponse = new ArrayList<>();
 
-        for (AskAi askAi : providers) {
-            String resultOfPrompt = askAi.sendRequest(request.userRequest());
-            aiResponse.add(resultOfPrompt);
+        Integer attempts = 0;
+
+        while (attempts < 3) {
+            try {
+                for (AskAi askAi : providers) {
+                    String resultOfPrompt = askAi.sendRequest(request.userRequest());
+                    aiResponse.add(resultOfPrompt);
+                }
+                return aiResponse;
+            } catch (Exception e) {
+                attempts++;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+            }
         }
 
-        return aiResponse;
+        return List.of("IA INDISPONIBLE");
     }
 
 }
