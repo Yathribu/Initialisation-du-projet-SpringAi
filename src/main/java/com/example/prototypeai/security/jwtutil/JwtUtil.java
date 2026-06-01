@@ -5,6 +5,8 @@ import com.example.prototypeai.user.entity.AiUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,9 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -20,15 +24,25 @@ import java.util.stream.Collectors;
 public class JwtUtil {
 
     private final ConfigJwt  configJwt;
+    private final Environment env;
+
+    @Value("${app.jwtutil.issuer:Prototype Ai}")
+    private String issuer;
+
+    @Value("${app.jwtutil.subject:JWT Token}")
+    private String subject;
 
     public String generateJwtToken(Authentication authentication) {
+
+        List<String> profiles = Arrays.asList(env.getActiveProfiles());
+
         String jwtToken;
         String secret = configJwt.getSecretKey();
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         AiUser aiUser = (AiUser) authentication.getPrincipal();
         jwtToken = Jwts.builder()
-                .issuer("Prototype Ai")
-                .subject("JWT Token") // Ou ID de l'utilisateur ?
+                .issuer(issuer)
+                .subject(subject)
                 .claim("name", aiUser.getName())
                 .claim("email", aiUser.getEmail())
                 .claim("numeroDeTelephone", aiUser.getNumeroDeTelephone())

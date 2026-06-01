@@ -20,6 +20,7 @@ public class CaffeineCacheConfig {
         CaffeineCache caffeineCache = new CaffeineCache("aiResponse", Caffeine.newBuilder()
                                                                                 .expireAfterWrite(10, TimeUnit.MINUTES)
                                                                                 .maximumSize(100)
+                                                                                .recordStats()
                                                                                 .build());
         SimpleCacheManager simpleCacheManager = new SimpleCacheManager();
         simpleCacheManager.setCaches(List.of(caffeineCache));

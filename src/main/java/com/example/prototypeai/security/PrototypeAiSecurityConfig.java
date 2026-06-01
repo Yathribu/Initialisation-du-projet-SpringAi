@@ -23,13 +23,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class PrototypeAiSecurityConfig {
 
     private final List<String> publicPaths;
-    private final List<String> securedPaths;
+    private final List<String> adminPaths;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public PrototypeAiSecurityConfig(@Qualifier("publicPaths") List<String> publicPaths,
-                                     @Qualifier("securedPaths")List<String> securedPaths, JwtAuthenticationFilter jwtAuthenticationFilter) {
+                                     @Qualifier("adminPaths")List<String> adminPaths, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.publicPaths = publicPaths;
-        this.securedPaths = securedPaths;
+        this.adminPaths = adminPaths;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
@@ -37,7 +37,7 @@ public class PrototypeAiSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http.authorizeHttpRequests(authorizeRequests -> {
                     publicPaths.forEach(path -> authorizeRequests.requestMatchers(path).permitAll());
-                    securedPaths.forEach(path -> authorizeRequests.requestMatchers(path).authenticated());
+                    adminPaths.forEach(path -> authorizeRequests.requestMatchers(path).hasRole("ADMIN"));
                     authorizeRequests.anyRequest().denyAll();
                 })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

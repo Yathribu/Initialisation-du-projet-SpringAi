@@ -24,9 +24,4 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(adminService.getAiUsersStats());
     }
 
-
-
-
-
-
 }

@@ -20,7 +20,6 @@ public class AdminServiceImpl implements AdminService {
     @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Page<AiRequestAdminDto> getAiUsersStats() {
-
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("createdAt").descending());
         return aiRequestRepository.getAllRequest(pageRequest);
     }

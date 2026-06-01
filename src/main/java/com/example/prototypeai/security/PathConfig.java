@@ -16,7 +16,7 @@ public class PathConfig {
         );
     }
 
-    @Bean(name = "securedPaths")
+    @Bean(name = "adminPaths")
     public List<String> securedPath() {
         return List.of(
                 "/..."
