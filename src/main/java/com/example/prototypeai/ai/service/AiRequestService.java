@@ -4,10 +4,10 @@ import com.example.prototypeai.ai.client.AskAi;
 import com.example.prototypeai.ai.dto.AiRequestDto;
 import com.example.prototypeai.ai.entity.AiRequest;
 import com.example.prototypeai.ai.providerresolver.ProviderResolver;
-import com.example.prototypeai.ratelimit.RateLimit;
 import com.example.prototypeai.user.entity.AiUser;
 import com.example.prototypeai.user.repository.IAiUserRepository;
 import com.example.prototypeai.ai.repository.AiRequestRepository;
+import com.ratelimiterspringcore.ratelimit.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -22,7 +22,7 @@ public class AiRequestService {
 
     private final AiRequestRepository aiRequestRepository;
     private final IAiUserRepository userRepository;
-    private final RateLimit rateLimit;
+    private final RateLimiter rateLimiter;
     private final ProviderResolver providerResolver;
     private final RequestToAi requestToAi;
 
@@ -35,11 +35,11 @@ public class AiRequestService {
                                     .orElseThrow(() -> new RuntimeException("User not found"));
 
         // A-t-il dépassé la limite de 15 requêtes par 10 minutes ?
-        if(!rateLimit.isAuthorizedToPrompt(request)) {
+        if(!rateLimiter.isAuthorizedToPrompt(request.userId(), user.getUserSubscription().getSubscriptionType().getNumberOfRequestsPer60seconds())) {
             throw new IllegalArgumentException("Nombre de requête limité");
         }
 
-        List<AskAi> aiProviders = providerResolver.getUserAi(authentication);
+        List<AskAi> aiProviders = providerResolver.getUserAi(request, authentication);
 
         List<String> aiResponse = requestToAi.getAiResponse(request, aiProviders);
 

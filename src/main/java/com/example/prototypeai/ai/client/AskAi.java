@@ -1,6 +1,7 @@
 package com.example.prototypeai.ai.client;
 
 import com.example.prototypeai.subscription.entity.UserSubscription;
+import com.example.prototypeai.user.entity.AiUser;
 import com.example.prototypeai.util.enums.RequestType;
 
 public interface AskAi {
@@ -8,5 +9,5 @@ public interface AskAi {
 
     RequestType getProvider();
 
-    boolean support(UserSubscription.SubscriptionType subscriptionType);
+    boolean support(RequestType requestType, AiUser aiUser);
 }

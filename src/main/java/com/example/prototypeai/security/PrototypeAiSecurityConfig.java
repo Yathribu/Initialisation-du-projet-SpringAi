@@ -38,6 +38,7 @@ public class PrototypeAiSecurityConfig {
         return http.authorizeHttpRequests(authorizeRequests -> {
                     publicPaths.forEach(path -> authorizeRequests.requestMatchers(path).permitAll());
                     adminPaths.forEach(path -> authorizeRequests.requestMatchers(path).hasRole("ADMIN"));
+                    authorizeRequests.requestMatchers("").permitAll();
                     authorizeRequests.anyRequest().denyAll();
                 })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

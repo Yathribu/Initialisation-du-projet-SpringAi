@@ -1,5 +1,6 @@
 package com.example.prototypeai.ai.dto;
 
+import com.example.prototypeai.util.enums.RequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -9,7 +10,7 @@ import java.util.List;
 public class AiRequestDto {
 
     @Builder
-    public record PostInput(@NotBlank String userRequest, @NotNull Long userId) {
+    public record PostInput(@NotBlank String userRequest, @NotNull Long userId, @NotNull RequestType requestType) {
 
     }
 

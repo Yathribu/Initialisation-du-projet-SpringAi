@@ -1,6 +1,6 @@
 package com.example.prototypeai.ai.client;
 
-import com.example.prototypeai.subscription.entity.UserSubscription;
+import com.example.prototypeai.user.entity.AiUser;
 import com.example.prototypeai.util.enums.RequestType;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
@@ -44,8 +44,8 @@ public class GrokFast implements AskAi{
     }
 
     @Override
-    public boolean support(UserSubscription.SubscriptionType subscriptionType) {
-        return subscriptionType == UserSubscription.SubscriptionType.PREMIUM || subscriptionType == UserSubscription.SubscriptionType.FREE;
+    public boolean support(RequestType requestType, AiUser aiUser) {
+        return aiUser.getUserSubscription().getSubscriptionType().getLevel() >= requestType.getMinimalSubscription().getLevel();
     }
 
 }

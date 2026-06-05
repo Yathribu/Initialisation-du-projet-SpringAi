@@ -34,8 +34,6 @@ public class JwtUtil {
 
     public String generateJwtToken(Authentication authentication) {
 
-        List<String> profiles = Arrays.asList(env.getActiveProfiles());
-
         String jwtToken;
         String secret = configJwt.getSecretKey();
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

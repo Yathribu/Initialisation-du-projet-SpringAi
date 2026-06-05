@@ -1,17 +1,23 @@
 package com.example.prototypeai.ratelimit;
 
-import com.example.prototypeai.ai.dto.AiRequestDto;
-import com.example.prototypeai.ai.repository.AiRequestRepository;
+import com.ratelimiterspringcore.ratelimit.RateLimiter;
+import com.ratelimiterspringcore.ratelimit.RateLimiterImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import java.time.Duration;
-import java.time.Instant;
 
+@Configuration
 @Component
 @RequiredArgsConstructor
-public class RateLimit {
+public class RateLimitConfig {
 
-    private final AiRequestRepository aiRequestRepository;
+    @Bean
+    public RateLimiter rateLimiter() {
+        return new RateLimiterImpl();
+    }
+
+    /*private final AiRequestRepository aiRequestRepository;
 
     public boolean isAuthorizedToPrompt(AiRequestDto.PostInput request) {
         int limitRateDelay = 15;
@@ -21,5 +27,6 @@ public class RateLimit {
         Integer count = aiRequestRepository.countByAiUserIdAndCreatedAtAfter(request.userId(), windows);
 
         return count <= amountOfPromptLimit;
-    }
+    }*/
+
 }

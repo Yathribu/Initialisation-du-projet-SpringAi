@@ -1,6 +1,6 @@
 package com.example.prototypeai.user.dto;
 
-import com.example.prototypeai.ai.client.AskAi;
+import com.example.prototypeai.auth.providertype.AiProviderType;
 import com.example.prototypeai.role.roleenum.RoleType;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ public class AiUserDto {
 
     private Long userId;
     private List<String> response;
-    private List<AskAi> aiProviders;
+    private List<AiProviderType> aiProviders;
     private String name;
     private String email;
     private RoleType role;
