@@ -2,14 +2,13 @@ package com.example.prototypeai.ratelimit;
 
 import com.example.prototypeai.user.entity.AiUser;
 import com.example.prototypeai.user.repository.IAiUserRepository;
-import com.ratelimiterspringcore.ratelimit.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @RequiredArgsConstructor
-public class RateLimitConfig implements RateLimiter {
+public class RateLimiter implements com.ratelimiterspringcore.ratelimit.RateLimiter {
 
     private final ConcurrentHashMap<String, Window> windows = new ConcurrentHashMap<>();
 
@@ -21,6 +20,7 @@ public class RateLimitConfig implements RateLimiter {
     public boolean isAuthorizedToPrompt(Long userId) {
 
         AiUser aiuser = aiUserRepository.findById(userId).orElse(null);
+        assert aiuser != null;
         int limit = aiuser.getUserSubscription().getSubscriptionType().getNumberOfRequestsPer60seconds();
         long now = System.currentTimeMillis();
 
