@@ -26,7 +26,7 @@ public class AiRequestService {
     private final ProviderResolver providerResolver;
     private final RequestToAi requestToAi;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')") // Plus propre avec annotation
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Transactional
     public AiRequestDto.PostOutput sendPrompt(AiRequestDto.PostInput request, Authentication authentication) {
 
@@ -35,7 +35,7 @@ public class AiRequestService {
                                     .orElseThrow(() -> new RuntimeException("User not found"));
 
         // A-t-il dépassé la limite de 15 requêtes par 10 minutes ?
-        if(!rateLimiter.isAuthorizedToPrompt(request.userId(), user.getUserSubscription().getSubscriptionType().getNumberOfRequestsPer60seconds())) {
+        if(!rateLimiter.isAuthorizedToPrompt(request.userId())) {
             throw new IllegalArgumentException("Nombre de requête limité");
         }
 

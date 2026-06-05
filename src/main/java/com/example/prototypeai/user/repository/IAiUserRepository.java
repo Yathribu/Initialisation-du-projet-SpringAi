@@ -10,4 +10,5 @@ public interface IAiUserRepository extends JpaRepository<AiUser, Long> {
 
     Optional<AiUser> findAiUserByEmail(String email);
 
+    AiUser findAiUserById(Long userId);
 }

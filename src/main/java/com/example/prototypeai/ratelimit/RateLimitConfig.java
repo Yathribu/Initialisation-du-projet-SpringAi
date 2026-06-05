@@ -1,32 +1,55 @@
 package com.example.prototypeai.ratelimit;
 
+import com.example.prototypeai.user.entity.AiUser;
+import com.example.prototypeai.user.repository.IAiUserRepository;
 import com.ratelimiterspringcore.ratelimit.RateLimiter;
-import com.ratelimiterspringcore.ratelimit.RateLimiterImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import java.util.concurrent.ConcurrentHashMap;
 
-@Configuration
 @Component
 @RequiredArgsConstructor
-public class RateLimitConfig {
+public class RateLimitConfig implements RateLimiter {
 
-    @Bean
-    public RateLimiter rateLimiter() {
-        return new RateLimiterImpl();
+    private final ConcurrentHashMap<String, Window> windows = new ConcurrentHashMap<>();
+
+    private static final long WINDOW_MS = 60_000;
+
+    private final IAiUserRepository aiUserRepository;
+
+    @Override
+    public boolean isAuthorizedToPrompt(Long userId) {
+
+        AiUser aiuser = aiUserRepository.findById(userId).orElse(null);
+        int limit = aiuser.getUserSubscription().getSubscriptionType().getNumberOfRequestsPer60seconds();
+        long now = System.currentTimeMillis();
+
+        Window window = windows.computeIfAbsent(userId.toString(), k -> new Window(0, now));
+
+        synchronized (window) {
+
+            if (now - window.startTime > WINDOW_MS) {
+                window.count = 0;
+                window.startTime = now;
+            }
+
+            if (window.count >= limit) {
+                return false;
+            }
+
+            window.count++;
+            return true;
+        }
     }
 
-    /*private final AiRequestRepository aiRequestRepository;
+    private static class Window {
+        int count;
+        long startTime;
 
-    public boolean isAuthorizedToPrompt(AiRequestDto.PostInput request) {
-        int limitRateDelay = 15;
-        int amountOfPromptLimit = 10;
-
-        Instant windows = Instant.now().minus(Duration.ofMinutes(limitRateDelay));
-        Integer count = aiRequestRepository.countByAiUserIdAndCreatedAtAfter(request.userId(), windows);
-
-        return count <= amountOfPromptLimit;
-    }*/
+        Window(int count, long startTime) {
+            this.count = count;
+            this.startTime = startTime;
+        }
+    }
 
 }
